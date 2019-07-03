@@ -2,7 +2,7 @@
 
 mvn install
 
-cd wx_01
+cd weixin1
 mvn spring-boot:start
 
 cd ../subscribe

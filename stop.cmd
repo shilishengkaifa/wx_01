@@ -1,4 +1,4 @@
-cd weixin
+cd weixin1
 mvn spring-boot:stop
 
 cd ..\subscribe
