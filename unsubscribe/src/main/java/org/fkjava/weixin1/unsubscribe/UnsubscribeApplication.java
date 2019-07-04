@@ -1,4 +1,4 @@
-package org.fkjava.weixin1;
+package org.fkjava.weixin1.unsubscribe;
 
 
 import java.util.ArrayList;
@@ -38,8 +38,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ComponentScan("org.fkjava")
 @EnableJpaRepositories("org.fkjava")
 @EntityScan("org.fkjava")
-public class SubscribeApplication  implements EventListenerConfig,ApplicationContextAware {
-
+public class UnsubscribeApplication  implements EventListenerConfig, ApplicationContextAware {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(UnsubscribeApplication.class);
 	private ApplicationContext ctx;
 	
 	@Override
@@ -48,7 +49,8 @@ public class SubscribeApplication  implements EventListenerConfig,ApplicationCon
 	}
 	
 	 
-	 private static final Logger LOG = LoggerFactory.getLogger(SubscribeApplication.class);
+	 
+	 @Override
 	 public void handle(EventInMessage msg) {
 		 
 		 String id =msg.getEvent().toLowerCase()+"MessageProcessor";
@@ -72,7 +74,7 @@ public class SubscribeApplication  implements EventListenerConfig,ApplicationCon
 	 }
 	 
 	public static void main(String[] args) throws InterruptedException {
-		SpringApplication.run(SubscribeApplication.class, args);
+		SpringApplication.run(UnsubscribeApplication.class, args);
 		
 	}
 
