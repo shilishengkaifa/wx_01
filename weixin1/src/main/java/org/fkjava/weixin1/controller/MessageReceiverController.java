@@ -56,7 +56,7 @@ public class MessageReceiverController {
 		//截取消息类型
 		//<MsgType><![CDATA[event]]></MsgType>
 		String type= xml.substring(xml.indexOf("<MsgType><![CDATA[") + 18);
-		type =xml.substring(0,xml.indexOf("]"));
+		type =type.substring(0,type.indexOf("]"));
 		
 		System.out.println(type);
 		

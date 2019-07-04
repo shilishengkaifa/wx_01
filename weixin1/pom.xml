@@ -35,10 +35,10 @@
 	    
 	    <!-- Jackson原本是用于Java和JSON相互转换的，后来为了实现Java和XML的转换，增加了jackson-dataformat-xml -->
 		<!-- 如果要使用Jackson，那么就用这个转换器即可！ -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-		</dependency>
+		</dependency> -->
 	    
 		<!-- 自动配置Spring Data JPA，使用Hibernate实现 -->
 		<dependency>
