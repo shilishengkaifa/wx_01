@@ -12,17 +12,17 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonRedisSerializer extends Jackson2JsonRedisSerializer<InMessage> {
+public class JsonRedisSerializer extends Jackson2JsonRedisSerializer<Object> {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	public JsonRedisSerializer() {
-		super(InMessage.class);
+		super(Object.class);
 	}
 
 	// 序列化对象的时候被调用的方法，负责把InMessage转换为byte[]
 	@Override
-	public byte[] serialize(InMessage t) throws SerializationException {
+	public byte[] serialize(Object t) throws SerializationException {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();// 把数据输出到一个字节数组
 		DataOutputStream out = new DataOutputStream(baos);// 把输出流封装成数据输出流
