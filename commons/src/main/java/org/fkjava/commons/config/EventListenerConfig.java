@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fkjava.commons.domain.InMessage;
+import org.fkjava.commons.domain.ResponseToken;
 import org.fkjava.commons.domain.event.EventInMessage;
 import org.fkjava.commons.service.JsonRedisSerializer;
 import org.springframework.beans.factory.DisposableBean;
@@ -52,6 +53,16 @@ public interface EventListenerConfig extends CommandLineRunner,DisposableBean {
 			
 			return template;
 	    }
+		
+		@Bean
+		public default RedisTemplate<String,ResponseToken>tokenRedisTemplate(//
+				@Autowired RedisConnectionFactory redisConnectionFactory){
+			RedisTemplate<String,ResponseToken> template =new RedisTemplate<>();
+			template.setConnectionFactory(redisConnectionFactory);
+			template.setValueSerializer(new JsonRedisSerializer());
+			
+			return template;
+		}
 		 
 		 @Bean
 		 public  default MessageListenerAdapter messageListener(@Autowired RedisTemplate<String,InMessage> inMessageTemplate) {
