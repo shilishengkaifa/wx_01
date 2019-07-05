@@ -1,4 +1,4 @@
-package org.fkjava.weixin1.service;
+package org.fkjava.commons.service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -68,10 +68,24 @@ public class WeixinProxy {
 
 	public void sendText(String account, String openId, String content) {
 		TextOutMessage  msg = new TextOutMessage(openId, content);
-		String token = this.tokenManager.getToken(account);
 		try {
 			String json = this.objectMapper.writeValueAsString(msg);
-			String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + token;
+			String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=";
+			post(url,json);
+		} catch (JsonProcessingException e) {
+			LOG.error("通过客服接口发送信息出现问题：" + e.getLocalizedMessage(), e);
+		}
+	}
+  
+	public void saveMenu(String json) {
+		String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+		this.post(url, json);
+	}
+	
+	private void post(String url,String json) {
+		String token = this.tokenManager.getToken(null);
+		try {
+		    url = url + token;
 			HttpRequest request = HttpRequest.newBuilder(URI.create(url))
 					.POST(BodyPublishers.ofString(json, Charset.forName("UTF-8")))//
 					.build();
@@ -81,11 +95,10 @@ public class WeixinProxy {
 			=client.sendAsync(request, BodyHandlers.ofString(Charset.forName("UTF-8")));
 			future.thenAccept(response ->{
 				String body = response.body();
-				LOG.trace("发送客服消息返回内容： \n{}", body);
+				LOG.trace("POST数据到微信公众号返回内容： \n{}", body);
 			});
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			LOG.error("保POST数据到微信公众号出现问题：" + e.getLocalizedMessage(), e);
 		}
 	}
-     
 }
